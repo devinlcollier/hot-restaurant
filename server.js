@@ -49,8 +49,16 @@ app.post("/api/newRes", function(req, res) {
   res.json(newReservation);
 });
 
+app.get("/api/tables", function(req, res){
+	res.json(tableReservation);
+});
+
 app.post("/api/tables", function(req, res){
 	res.json(tableReservation);
+});
+
+app.get("/api/waiting", function(req, res){
+	res.json(waitingList);
 });
 
 app.post("/api/waiting", function(req, res){
