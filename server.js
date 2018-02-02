@@ -19,19 +19,19 @@ const waitingList = [];
 // },
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "view.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.get("/favicon.ico", function(req, res) {
   res.sendFile(path.join(__dirname, "favicon.ico"));
 });
 
-app.get("/reserve", function(req, res) {
-  res.sendFile(path.join(__dirname, "add.html"));
+app.get("/makeres", function(req, res) {
+  res.sendFile(path.join(__dirname, "makeres.html"));
 });
 
-app.get("/tables", function(req, res) {
-  res.sendFile(path.join(__dirname, "add.html"));
+app.get("/viewtables", function(req, res) {
+  res.sendFile(path.join(__dirname, "viewtables.html"));
 });
 
 app.post("/api/newRes", function(req, res) {
