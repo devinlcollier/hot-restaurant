@@ -1,12 +1,15 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var path = require("path");
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
 
-var app = express();
-var PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-var tableReservation = [];
-var waitingList = [];
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+const tableReservation = [];
+const waitingList = [];
 
 // {
 // "customerName": "SuperDave",
@@ -19,19 +22,20 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "view.html"));
 });
 
-app.get("/add", function(req, res) {
+app.get("/favicon.ico", function(req, res) {
+  res.sendFile(path.join(__dirname, "favicon.ico"));
+});
+
+app.get("/reserve", function(req, res) {
   res.sendFile(path.join(__dirname, "add.html"));
 });
 
+app.get("/tables", function(req, res) {
+  res.sendFile(path.join(__dirname, "add.html"));
+});
 
-// Create New Characters - takes in JSON input
 app.post("/api/newRes", function(req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body-parser middleware
   var newReservation = req.body;
-  // Using a RegEx Pattern to remove spaces from newCharacter
-  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
 
   console.log(newReservation);
   if (tableReservation.length < 5) {
@@ -42,13 +46,17 @@ app.post("/api/newRes", function(req, res) {
   	waitingList.push(newReservation);
   }
 
-  
-
   res.json(newReservation);
 });
 
-// Starts the server to begin listening
-// =============================================================
+app.post("/api/tables", function(req, res){
+	res.json(tableReservation);
+});
+
+app.post("/api/waiting", function(req, res){
+	res.json(waitingList);
+});
+
 app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT);
+  console.log("server started on PORT " + PORT);
 });
